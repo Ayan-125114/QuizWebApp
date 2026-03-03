@@ -19,6 +19,16 @@ async function main() {
 const authRoutes = require("./routes/authRoutes");
 app.use("/api/auth", authRoutes);
 
+const quizRoutes = require("./routes/quizRoutes");
+app.use("/api/quiz" , quizRoutes);
+
+const resultRoutes = require("./routes/resultRoutes");
+app.use("/api/results" ,resultRoutes);
+
+const dashboardRoutes = require("./routes/dashboardRoutes");
+app.use("/api/dashboard", dashboardRoutes);
+
+
 app.listen(process.env.PORT , ()=>{
     console.log("server is start");
 });
