@@ -53,131 +53,63 @@ function StudentDashboard() {
   };
 
   return (
-    <div style={styles.container}>
-
-      {/* HEADER */}
-      <div style={styles.header}>
-        <h1>🎓 Student Dashboard</h1>
-
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-center mb-8 gap-4">
+        <h1 className="text-3xl font-extrabold text-slate-900 tracking-tight">🎓 Student Dashboard</h1>
         <button
-          style={styles.resultBtn}
+          className="inline-flex items-center justify-center px-5 py-2.5 border border-transparent text-sm font-medium rounded-lg text-white bg-indigo-600 hover:bg-indigo-700 shadow-sm transition-colors"
           onClick={() => navigate("/my-results")}
         >
           📊 My Results
         </button>
       </div>
 
-      <h2 style={{marginTop:"20px"}}>Available Quizzes</h2>
+      <h2 className="text-2xl font-bold text-slate-800 mb-6">Available Quizzes</h2>
 
-      <div style={styles.grid}>
-
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {quizzes.map((quiz) => (
-
-          <div key={quiz._id} style={styles.card}>
-
-            <h3>{quiz.title}</h3>
-
-            <p style={{color:"#555"}}>
-              {quiz.description}
-            </p>
-
-            <p>
-              Attempts Left:
-              <b>
-                {" "}
-                {quiz.attemptsLeft} / {quiz.maxAttempts}
-              </b>
-            </p>
-
-            {results[quiz._id] && (
-              <div style={{ marginTop: "10px" }}>
-                <p>
-                  ✅ Best Score:
-                  <b>
-                    {" "}
-                    {results[quiz._id].score} /
-                    {results[quiz._id].totalQuestions}
-                  </b>
-                </p>
+          <div key={quiz._id} className="bg-white rounded-xl shadow-md overflow-hidden border border-slate-200 hover:shadow-lg transition-shadow flex flex-col">
+            <div className="p-6 flex-grow">
+              <h3 className="text-xl font-bold text-slate-900 mb-2">{quiz.title}</h3>
+              <p className="text-slate-600 mb-4 line-clamp-3">{quiz.description}</p>
+              
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm font-medium text-slate-500">Attempts Left:</span>
+                <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-indigo-100 text-indigo-800">
+                  {quiz.attemptsLeft} / {quiz.maxAttempts}
+                </span>
               </div>
-            )}
 
-            <button
-              style={{
-                ...styles.startBtn,
-                background:
+              {results[quiz._id] && (
+                <div className="mt-4 p-3 bg-emerald-50 rounded-lg border border-emerald-100">
+                  <p className="text-sm text-emerald-800 font-medium flex items-center justify-between">
+                    <span>✅ Best Score:</span>
+                    <span className="font-bold text-emerald-900">
+                      {results[quiz._id].score} / {results[quiz._id].totalQuestions}
+                    </span>
+                  </p>
+                </div>
+              )}
+            </div>
+
+            <div className="px-6 py-4 bg-slate-50 border-t border-slate-100 mt-auto">
+              <button
+                className={`w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg text-sm font-medium text-white shadow-sm transition-colors ${
                   quiz.attemptsLeft <= 0
-                    ? "#ccc"
-                    : "#4CAF50"
-              }}
-              disabled={quiz.attemptsLeft <= 0}
-              onClick={() => startQuiz(quiz._id)}
-            >
-              {quiz.attemptsLeft <= 0
-                ? "No Attempts Left"
-                : "Start Quiz"}
-            </button>
-
+                    ? "bg-slate-400 cursor-not-allowed"
+                    : "bg-emerald-600 hover:bg-emerald-700"
+                }`}
+                disabled={quiz.attemptsLeft <= 0}
+                onClick={() => startQuiz(quiz._id)}
+              >
+                {quiz.attemptsLeft <= 0 ? "No Attempts Left" : "Start Quiz"}
+              </button>
+            </div>
           </div>
-
         ))}
-
       </div>
-
     </div>
   );
 }
 
 export default StudentDashboard;
-
-
-/* ================= STYLES ================= */
-
-const styles = {
-
-  container: {
-    padding: "30px",
-    fontFamily: "Arial"
-  },
-
-  header: {
-    display: "flex",
-    justifyContent: "space-between",
-    alignItems: "center"
-  },
-
-  resultBtn: {
-    padding: "10px 18px",
-    background: "#2196F3",
-    color: "white",
-    border: "none",
-    borderRadius: "6px",
-    cursor: "pointer"
-  },
-
-  grid: {
-    display: "grid",
-    gridTemplateColumns:
-      "repeat(auto-fit, minmax(250px, 1fr))",
-    gap: "20px",
-    marginTop: "20px"
-  },
-
-  card: {
-    border: "1px solid #ddd",
-    borderRadius: "10px",
-    padding: "20px",
-    boxShadow: "0px 3px 8px rgba(0,0,0,0.1)",
-    background: "white"
-  },
-
-  startBtn: {
-    marginTop: "10px",
-    padding: "10px",
-    border: "none",
-    borderRadius: "6px",
-    color: "white",
-    cursor: "pointer",
-    width: "100%"
-  }
-};
