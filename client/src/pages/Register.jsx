@@ -26,7 +26,8 @@ function Register() {
       navigate("/"); // go to login page
 
     } catch (err) {
-      alert("Registration Failed");
+        console.log(err.response);
+        alert(err.response?.data?.message || err.message);
     }
   };
 
